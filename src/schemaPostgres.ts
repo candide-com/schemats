@@ -1,7 +1,7 @@
 import * as PgPromise from "pg-promise"
 import {mapValues} from "lodash"
 import {keys} from "lodash"
-import Options from "./options"
+import {transformTypeName} from "./options"
 
 import {TableDefinition, Database} from "./schemaInterfaces"
 
@@ -11,7 +11,6 @@ export class PostgresDatabase implements Database {
   private static mapTableDefinitionToType(
     tableDefinition: TableDefinition,
     customTypes: Array<string>,
-    options: Options,
   ): TableDefinition {
     return mapValues(tableDefinition, column => {
       switch (column.udtName) {
@@ -81,7 +80,7 @@ export class PostgresDatabase implements Database {
           return column
         default:
           if (customTypes.indexOf(column.udtName) !== -1) {
-            column.outputTsType = options.transformTypeName(column.udtName)
+            column.outputTsType = transformTypeName(column.udtName)
             return column
           } else {
             console.log(
@@ -156,17 +155,12 @@ export class PostgresDatabase implements Database {
     return tableDefinition
   }
 
-  public async getTableTypes(
-    tableName: string,
-    tableSchema: string,
-    options: Options,
-  ) {
+  public async getTableTypes(tableName: string, tableSchema: string) {
     const enumTypes = await this.getEnumTypes()
     const customTypes = keys(enumTypes)
     return PostgresDatabase.mapTableDefinitionToType(
       await this.getTableDefinition(tableName, tableSchema),
       customTypes,
-      options,
     )
   }
 

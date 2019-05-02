@@ -7,6 +7,7 @@ import {
   generateEnumType,
   generateTableInterface,
   generateTableInputInterface,
+  generateTableList,
 } from "./typescript"
 import {getDatabase, Database} from "./schema"
 import Options, {OptionValues} from "./options"
@@ -29,7 +30,6 @@ function buildHeader(
   db: Database,
   tables: Array<string>,
   schema: string | null,
-  options: OptionValues,
 ): string {
   const commands = [
     "schemats",
@@ -62,16 +62,15 @@ export async function typescriptOfTable(
   db: Database | string,
   table: string,
   schema: string,
-  options = new Options(),
 ) {
   if (typeof db === "string") {
     db = getDatabase(db)
   }
 
   let interfaces = ""
-  const tableTypes = await db.getTableTypes(table, schema, options)
-  interfaces += generateTableInterface(table, tableTypes, options)
-  interfaces += generateTableInputInterface(table, tableTypes, options)
+  const tableTypes = await db.getTableTypes(table, schema)
+  interfaces += generateTableInterface(table, tableTypes)
+  interfaces += generateTableInputInterface(table, tableTypes)
   return interfaces
 }
 
@@ -97,12 +96,9 @@ export async function typescriptOfSchema(
 
   const optionsObject = new Options(options)
 
-  const enumTypes = generateEnumType(
-    await db.getEnumTypes(schema),
-    optionsObject,
-  )
+  const enumTypes = generateEnumType(await db.getEnumTypes(schema))
   const interfacePromises = tables.map(table =>
-    typescriptOfTable(db, table, schema as string, optionsObject),
+    typescriptOfTable(db, table, schema as string),
   )
   const interfaces = await Promise.all(interfacePromises).then(tsOfTable =>
     tsOfTable.join(""),
@@ -110,12 +106,14 @@ export async function typescriptOfSchema(
 
   let output = "/* tslint:disable */\n\n"
   if (optionsObject.options.writeHeader) {
-    output += buildHeader(db, tables, schema, options)
+    output += buildHeader(db, tables, schema)
   }
 
   output += fixtures
   output += enumTypes
   output += interfaces
+  output += "\n\n"
+  output += generateTableList(tables)
 
   const formatterOption: ITFOptions = {
     replace: false,

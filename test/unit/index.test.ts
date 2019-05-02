@@ -3,7 +3,7 @@ import * as sinon from "sinon"
 import * as Index from "../../src/index"
 import * as Typescript from "../../src/typescript"
 import {Database} from "../../src/schema"
-import Options, {OptionValues} from "../../src/options"
+import {OptionValues} from "../../src/options"
 
 const options: OptionValues = {}
 
@@ -34,21 +34,14 @@ describe("index", () => {
   describe("typescriptOfTable", () => {
     it("calls functions with correct params", async () => {
       dbReflection.getTableTypes.returns(Promise.resolve("tableTypes"))
-      await Index.typescriptOfTable(
-        db,
-        "tableName",
-        "schemaName",
-        new Options(options),
-      )
+      await Index.typescriptOfTable(db, "tableName", "schemaName")
       assert.deepEqual(dbReflection.getTableTypes.getCall(0).args, [
         "tableName",
         "schemaName",
-        new Options(options),
       ])
       assert.deepEqual(tsReflection.generateTableInterface.getCall(0).args, [
         "tableName",
         "tableTypes",
-        new Options(options),
       ])
     })
     it("merges string results", async () => {
@@ -61,7 +54,6 @@ describe("index", () => {
         db,
         "tableName",
         "schemaName",
-        new Options(options),
       )
       assert.equal(
         typescriptString,
@@ -74,12 +66,7 @@ describe("index", () => {
       dbReflection.getSchemaTables.returns(Promise.resolve(["tablename"]))
       dbReflection.getEnumTypes.returns(Promise.resolve("enumTypes"))
       tsReflection.generateEnumType.returns("generatedEnumTypes\n")
-      const tsOfSchema = await Index.typescriptOfSchema(
-        db,
-        [],
-        "schemaName",
-        options,
-      )
+      await Index.typescriptOfSchema(db, [], "schemaName", options)
 
       assert.deepEqual(
         dbReflection.getSchemaTables.getCall(0).args[0],

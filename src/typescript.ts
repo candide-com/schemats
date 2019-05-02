@@ -1,7 +1,7 @@
 import * as _ from "lodash"
 
 import {TableDefinition, ColumnDefinition} from "./schemaInterfaces"
-import Options from "./options"
+import {transformTypeName} from "./options"
 
 function makeInterfaceNameFromTableName(name: string): string {
   return name + "Row"
@@ -10,9 +10,8 @@ function makeInterfaceNameFromTableName(name: string): string {
 export function generateTableInterface(
   tableNameRaw: string,
   tableDefinition: TableDefinition,
-  options: Options,
 ) {
-  const tableName = options.transformTypeName(tableNameRaw)
+  const tableName = transformTypeName(tableNameRaw)
   const members = Object.keys(tableDefinition)
     .map(columnName => {
       return generateColumnType(columnName, tableDefinition[columnName])
@@ -38,9 +37,8 @@ function generateColumnType(
 export function generateTableInputInterface(
   tableNameRaw: string,
   tableDefinition: TableDefinition,
-  options: Options,
 ) {
-  const tableName = options.transformTypeName(tableNameRaw)
+  const tableName = transformTypeName(tableNameRaw)
   const members = Object.keys(tableDefinition)
     .map(columnName => {
       return generateInputColumnType(columnName, tableDefinition[columnName])
@@ -65,11 +63,22 @@ function generateInputColumnType(
   };`
 }
 
-export function generateEnumType(enumObject: any, options: Options) {
+export function generateTableList(tableNames: Array<string>) {
+  const one = (name: string) => `${name}: {
+      read: ${makeInterfaceNameFromTableName(transformTypeName(name))}
+      write: ${makeInterfaceNameFromTableName(transformTypeName(name))}Input
+    }`
+
+  return `export interface Tables {
+    ${tableNames.map(one).join("\n")}
+  }`
+}
+
+export function generateEnumType(enumObject: any) {
   let enumString = ""
   for (const enumNameRaw in enumObject) {
     if (enumObject.hasOwnProperty(enumNameRaw)) {
-      const enumName = options.transformTypeName(enumNameRaw)
+      const enumName = transformTypeName(enumNameRaw)
       enumString += `export type ${enumName} = `
       enumString += enumObject[enumNameRaw]
         .map((v: string) => `'${v}'`)

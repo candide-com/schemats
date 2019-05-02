@@ -24,7 +24,6 @@ export interface Database {
   getTableTypes(
     tableName: string,
     tableSchema: string,
-    options: Options,
   ): Promise<TableDefinition>
   getSchemaTables(schemaName: string): Promise<Array<string>>
 }

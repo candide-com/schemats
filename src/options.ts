@@ -14,8 +14,8 @@ export default class Options {
   constructor(options: OptionValues = {}) {
     this.options = {...DEFAULT_OPTIONS, ...options}
   }
+}
 
-  public transformTypeName(typename: string) {
-    return upperFirst(camelCase(typename))
-  }
+export function transformTypeName(typename: string) {
+  return upperFirst(camelCase(typename))
 }

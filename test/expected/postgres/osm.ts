@@ -140,3 +140,15 @@ export interface SecondTableRow {
 export interface SecondTableRowInput {
     email: string;
 }
+
+export interface Tables {
+    users: {
+        read: UsersRow
+        write: UsersRowInput
+    }
+
+    second_table: {
+        read: SecondTableRow
+        write: SecondTableRowInput
+    }
+}
