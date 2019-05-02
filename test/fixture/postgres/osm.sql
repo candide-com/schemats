@@ -79,3 +79,8 @@ CREATE TABLE users (
     jsonb_array_col jsonb[],
     timestamptz_array_col timestamptz[]
 );
+
+DROP TABLE IF EXISTS second_table;
+CREATE TABLE second_table (
+    email TEXT NOT NULL
+);

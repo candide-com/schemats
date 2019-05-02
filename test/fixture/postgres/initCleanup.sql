@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS second_table;
 DROP TYPE IF EXISTS user_status_enum;
 DROP TYPE IF EXISTS format_enum;
 

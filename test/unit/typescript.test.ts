@@ -20,28 +20,8 @@ describe("Typescript", () => {
       )
       assert.equal(
         enumType,
-        "export type enum1 = 'val1' | 'val2' | 'val3' | 'val4';\n" +
-          "export type enum2 = 'val5' | 'val6' | 'val7' | 'val8';\n",
-      )
-    })
-  })
-  describe("generateEnumType", () => {
-    it("empty object", () => {
-      const enumType = Typescript.generateEnumType({}, options)
-      assert.equal(enumType, "")
-    })
-    it("with enumerations", () => {
-      const enumType = Typescript.generateEnumType(
-        {
-          enum1: ["val1", "val2", "val3", "val4"],
-          enum2: ["val5", "val6", "val7", "val8"],
-        },
-        options,
-      )
-      assert.equal(
-        enumType,
-        "export type enum1 = 'val1' | 'val2' | 'val3' | 'val4';\n" +
-          "export type enum2 = 'val5' | 'val6' | 'val7' | 'val8';\n",
+        "export type Enum1 = 'val1' | 'val2' | 'val3' | 'val4';\n" +
+          "export type Enum2 = 'val5' | 'val6' | 'val7' | 'val8';\n",
       )
     })
   })

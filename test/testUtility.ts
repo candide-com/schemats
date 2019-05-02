@@ -32,8 +32,6 @@ export async function compare(
     newlineIsToken: true,
   })
 
-  console.log(diffs)
-
   const addOrRemovedLines = diffs.filter(
     (d: IDiffResult) => d.added || d.removed,
   )
@@ -71,7 +69,7 @@ export async function writeTsFile(
     db,
     config.tables,
     config.schema,
-    {camelCase: config.camelCase, writeHeader: config.writeHeader},
+    {writeHeader: config.writeHeader},
   )
   await fs.writeFile(outputFile, formattedOutput)
 }

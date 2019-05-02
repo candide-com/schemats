@@ -33,9 +33,6 @@ function buildHeader(
     "-c",
     db.connectionString.replace(/:\/\/.*@/, "://username:password@"),
   ]
-  if (options.camelCase) {
-    commands.push("-C")
-  }
   if (tables.length > 0) {
     tables.forEach((t: string) => {
       commands.push("-t", t)

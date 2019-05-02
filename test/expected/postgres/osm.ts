@@ -1,9 +1,9 @@
 /* tslint:disable */
 
-export type format_enum = 'html' | 'markdown' | 'text';
-export type user_status_enum = 'active' | 'confirmed' | 'deleted' | 'pending' | 'suspended';
+export type FormatEnum = 'html' | 'markdown' | 'text';
+export type UserStatusEnum = 'active' | 'confirmed' | 'deleted' | 'pending' | 'suspended';
 
-export interface users {
+export interface Users {
     email: string;
     id: number;
     pass_crypt: string;
@@ -21,13 +21,13 @@ export interface users {
     new_email: string | null;
     creation_ip: string | null;
     languages: string | null;
-    status: user_status_enum;
+    status: UserStatusEnum;
     terms_agreed: Date | null;
     consider_pd: boolean;
     preferred_editor: string | null;
     terms_seen: boolean;
     auth_uid: string | null;
-    description_format: format_enum;
+    description_format: FormatEnum;
     image_fingerprint: string | null;
     changesets_count: number;
     traces_count: number;
@@ -65,4 +65,8 @@ export interface users {
     json_array_col: Array<Object> | null;
     jsonb_array_col: Array<Object> | null;
     timestamptz_array_col: Array<Date> | null;
+}
+
+export interface SecondTable {
+    email: string;
 }

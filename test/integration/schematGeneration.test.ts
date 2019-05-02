@@ -21,13 +21,5 @@ describe("schemat generation integration testing", () => {
       await writeTsFile(inputSQLFile, config, outputFile, db)
       return assert(await compare(expectedFile, outputFile))
     })
-    it("Camelcase generation", async () => {
-      const inputSQLFile = "test/fixture/postgres/osm.sql"
-      const outputFile = "./test/actual/postgres/osm-camelcase.ts"
-      const expectedFile = "./test/expected/postgres/osm-camelcase.ts"
-      const config: any = "./fixture/postgres/osm-camelcase.json"
-      await writeTsFile(inputSQLFile, config, outputFile, db)
-      return assert(await compare(expectedFile, outputFile))
-    })
   })
 })

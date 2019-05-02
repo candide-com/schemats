@@ -14,7 +14,6 @@ interface SchematsConfig {
   table: Array<string> | string
   schema: string
   output: string
-  camelCase: boolean
   noHeader: boolean
 }
 
@@ -41,8 +40,6 @@ const argv: SchematsConfig = yargs
   .alias("s", "schema")
   .nargs("s", 1)
   .describe("s", "schema name")
-  .alias("C", "camelCase")
-  .describe("C", "Camel-case columns")
   .describe("noHeader", "Do not write header")
   .demand("o")
   .nargs("o", 1)
@@ -64,7 +61,7 @@ const argv: SchematsConfig = yargs
       argv.conn,
       argv.table,
       argv.schema,
-      {camelCase: argv.camelCase, writeHeader: !argv.noHeader},
+      {writeHeader: !argv.noHeader},
     )
     fs.writeFileSync(argv.output, formattedOutput)
   } catch (e) {
