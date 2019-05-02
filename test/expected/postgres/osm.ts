@@ -43,7 +43,7 @@ export namespace usersFields {
     export type time_col = string | null;
     export type inet_col = string | null;
     export type jsonb_col = Object | null;
-    export type numeric_col = number | null;
+    export type numeric_col = string | null;
     export type bytea_col = string | null;
     export type bool_array_col = Array<boolean> | null;
     export type varchar_array_col = Array<string> | null;

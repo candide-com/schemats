@@ -26,6 +26,7 @@ export class PostgresDatabase implements Database {
         case "time":
         case "timetz":
         case "interval":
+        case "numeric":
         case "name":
           column.tsType = "string"
           return column
@@ -34,7 +35,6 @@ export class PostgresDatabase implements Database {
         case "int8":
         case "float4":
         case "float8":
-        case "numeric":
         case "money":
         case "oid":
           column.tsType = "number"
@@ -56,7 +56,6 @@ export class PostgresDatabase implements Database {
         case "_int8":
         case "_float4":
         case "_float8":
-        case "_numeric":
         case "_money":
           column.tsType = "Array<number>"
           return column
@@ -67,6 +66,7 @@ export class PostgresDatabase implements Database {
         case "_text":
         case "_citext":
         case "_uuid":
+        case "_numeric":
         case "_bytea":
           column.tsType = "Array<string>"
           return column

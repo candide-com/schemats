@@ -403,7 +403,7 @@ describe("PostgresDatabase", () => {
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
             .tsType,
-          "number",
+          "string",
         )
       })
       it("money", () => {
@@ -593,7 +593,7 @@ describe("PostgresDatabase", () => {
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
             .tsType,
-          "Array<number>",
+          "Array<string>",
         )
       })
       it("_money", () => {
