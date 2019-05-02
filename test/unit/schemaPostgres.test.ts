@@ -78,7 +78,7 @@ describe("PostgresDatabase", () => {
       PostgresProxy.getTableDefinition("tableName", "schemaName")
       assert.equal(
         db.each.getCall(0).args[0],
-        "SELECT column_name, udt_name, is_nullable " +
+        "SELECT column_name, udt_name, is_nullable, column_default " +
           "FROM information_schema.columns " +
           "WHERE table_name = $1 and table_schema = $2",
       )
