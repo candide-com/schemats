@@ -8,8 +8,8 @@
     "typescript",
     "sql"
   ],
-  "main": "./src/index.js",
-  "types": "./src/index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "lint": "tslint --project tsconfig.json --type-check 'src/**/*.ts' 'test/**/*.test.ts' 'bin/**/*.ts' --exclude '**/*.d.ts'",
     "build": "tsc",
@@ -18,10 +18,11 @@
     "prepublish": "npm run build",
     "clean": "del-cli node_modules **/*.js",
     "coverage": "npm run lint && npm run build && npm run dependency-check && nyc mocha",
-    "coverage:ci": "npm run lint && npm run build && npm run dependency-check && nyc mocha && nyc report --reporter=text-lcov | coveralls"
+    "coverage:ci": "npm run lint && npm run build && npm run dependency-check && nyc mocha && nyc report --reporter=text-lcov | coveralls",
+    "fix-formatting": "./node_modules/.bin/prettier 'src/**/*.ts' 'test/**/*.ts' 'bin/**/*.ts' --write"
   },
   "bin": {
-    "schemats": "bin/schemats.js"
+    "schemats": "dist/bin/schemats.js"
   },
   "repository": {
     "type": "git",
@@ -42,9 +43,8 @@
     "@types/diff": "^3.2.0",
     "@types/lodash": "^4.14.37",
     "@types/mocha": "^2.2.39",
-    "@types/mysql": "0.0.33",
     "@types/mz": "^0.0.31",
-    "@types/node": "^6.0.77",
+    "@types/node": "^11.13.8",
     "@types/power-assert": "^1.4.29",
     "@types/proxyquire": "^1.3.27",
     "@types/sinon": "^2.1.2",
@@ -56,21 +56,21 @@
     "mocha": "^3.2.0",
     "nyc": "^11.0.2",
     "power-assert": "^1.4.2",
+    "prettier": "^1.17.0",
     "proxyquire": "^1.7.11",
     "sinon": "^2.1.0",
     "source-map-support": "^0.4.15",
     "ts-node": "^3.0.4",
     "tslint": "^5.4.2",
-    "tslint-config-standard": "^5.0.2"
+    "tslint-config-prettier": "^1.18.0"
   },
   "dependencies": {
     "bluebird": "^3.5.0",
     "diff": "^3.2.0",
     "lodash": "^4.17.4",
-    "mysql": "^2.13.0",
     "mz": "^2.6.0",
-    "pg-promise": "^6.3.6",
-    "typescript": "^2.7.1",
+    "pg-promise": "^8.0.0",
+    "typescript": "^3.4.5",
     "typescript-formatter": "^7.0.1",
     "yargs": "^8.0.1"
   },
