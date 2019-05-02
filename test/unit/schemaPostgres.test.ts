@@ -88,13 +88,23 @@ describe("PostgresDatabase", () => {
       const tableDefinition = await PostgresProxy.getTableDefinition()
       const callback = db.each.getCall(0).args[2]
       const dbResponse = [
-        {column_name: "col1", udt_name: "int2", is_nullable: "YES"},
-        {column_name: "col2", udt_name: "text", is_nullable: "NO"},
+        {
+          column_name: "col1",
+          udt_name: "int2",
+          is_nullable: "YES",
+          column_default: null,
+        },
+        {
+          column_name: "col2",
+          udt_name: "text",
+          is_nullable: "NO",
+          column_default: false,
+        },
       ]
       dbResponse.forEach(callback)
       assert.deepEqual(tableDefinition, {
-        col1: {udtName: "int2", nullable: true},
-        col2: {udtName: "text", nullable: false},
+        col1: {udtName: "int2", nullable: true, hasDefault: false},
+        col2: {udtName: "text", nullable: false, hasDefault: true},
       })
     })
   })
@@ -173,156 +183,168 @@ describe("PostgresDatabase", () => {
       it("bpchar", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "bpchar",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "string",
         )
       })
       it("char", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "char",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "string",
         )
       })
       it("varchar", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "varchar",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "string",
         )
       })
       it("text", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "text",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "string",
         )
       })
       it("citext", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "citext",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "string",
         )
       })
       it("uuid", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "uuid",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "string",
         )
       })
       it("bytea", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "bytea",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "string",
         )
       })
       it("inet", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "inet",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "string",
         )
       })
       it("time", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "time",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "string",
         )
       })
       it("timetz", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "timetz",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "string",
         )
       })
       it("interval", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "interval",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "string",
         )
       })
       it("name", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "name",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "string",
         )
       })
@@ -331,104 +353,112 @@ describe("PostgresDatabase", () => {
       it("int2", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "int2",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "number",
         )
       })
       it("int4", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "int4",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "number",
         )
       })
       it("int8", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "int8",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "number",
         )
       })
       it("float4", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "float4",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "number",
         )
       })
       it("float8", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "float8",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "number",
         )
       })
       it("numeric", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "numeric",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "string",
         )
       })
       it("money", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "money",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "number",
         )
       })
       it("oid", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "oid",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "number",
         )
       })
@@ -437,13 +467,14 @@ describe("PostgresDatabase", () => {
       it("bool", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "bool",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "boolean",
         )
       })
@@ -452,26 +483,28 @@ describe("PostgresDatabase", () => {
       it("json", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "json",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "Object",
         )
       })
       it("jsonb", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "jsonb",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "Object",
         )
       })
@@ -480,39 +513,42 @@ describe("PostgresDatabase", () => {
       it("date", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "date",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "Date",
         )
       })
       it("timestamp", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "timestamp",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "Date",
         )
       })
       it("timestamptz", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "timestamptz",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "Date",
         )
       })
@@ -521,91 +557,98 @@ describe("PostgresDatabase", () => {
       it("_int2", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "_int2",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "Array<number>",
         )
       })
       it("_int4", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "_int4",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "Array<number>",
         )
       })
       it("_int8", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "_int8",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "Array<number>",
         )
       })
       it("_float4", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "_float4",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "Array<number>",
         )
       })
       it("_float8", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "_float8",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "Array<number>",
         )
       })
       it("_numeric", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "_numeric",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "Array<string>",
         )
       })
       it("_money", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "_money",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "Array<number>",
         )
       })
@@ -614,6 +657,7 @@ describe("PostgresDatabase", () => {
       it("_bool", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "_bool",
             nullable: false,
           },
@@ -623,7 +667,7 @@ describe("PostgresDatabase", () => {
             td,
             ["CustomType"],
             options,
-          ).column.tsType,
+          ).column.outputTsType,
           "Array<boolean>",
         )
       })
@@ -632,6 +676,7 @@ describe("PostgresDatabase", () => {
       it("_varchar", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "_varchar",
             nullable: false,
           },
@@ -641,13 +686,14 @@ describe("PostgresDatabase", () => {
             td,
             ["CustomType"],
             options,
-          ).column.tsType,
+          ).column.outputTsType,
           "Array<string>",
         )
       })
       it("_text", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "_text",
             nullable: false,
           },
@@ -657,13 +703,14 @@ describe("PostgresDatabase", () => {
             td,
             ["CustomType"],
             options,
-          ).column.tsType,
+          ).column.outputTsType,
           "Array<string>",
         )
       })
       it("_citext", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "_citext",
             nullable: false,
           },
@@ -673,13 +720,14 @@ describe("PostgresDatabase", () => {
             td,
             ["CustomType"],
             options,
-          ).column.tsType,
+          ).column.outputTsType,
           "Array<string>",
         )
       })
       it("_uuid", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "_uuid",
             nullable: false,
           },
@@ -689,13 +737,14 @@ describe("PostgresDatabase", () => {
             td,
             ["CustomType"],
             options,
-          ).column.tsType,
+          ).column.outputTsType,
           "Array<string>",
         )
       })
       it("_bytea", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "_bytea",
             nullable: false,
           },
@@ -705,7 +754,7 @@ describe("PostgresDatabase", () => {
             td,
             ["CustomType"],
             options,
-          ).column.tsType,
+          ).column.outputTsType,
           "Array<string>",
         )
       })
@@ -715,26 +764,28 @@ describe("PostgresDatabase", () => {
       it("_json", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "_json",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "Array<Object>",
         )
       })
       it("_jsonb", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "_jsonb",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "Array<Object>",
         )
       })
@@ -744,13 +795,14 @@ describe("PostgresDatabase", () => {
       it("_timestamptz", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "_timestamptz",
             nullable: false,
           },
         }
         assert.equal(
           PostgresDBReflection.mapTableDefinitionToType(td, [], options).column
-            .tsType,
+            .outputTsType,
           "Array<Date>",
         )
       })
@@ -760,6 +812,7 @@ describe("PostgresDatabase", () => {
       it("CustomType", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "CustomType",
             nullable: false,
           },
@@ -769,7 +822,7 @@ describe("PostgresDatabase", () => {
             td,
             ["CustomType"],
             options,
-          ).column.tsType,
+          ).column.outputTsType,
           "CustomType",
         )
       })
@@ -778,6 +831,7 @@ describe("PostgresDatabase", () => {
       it("UnknownType", () => {
         const td: TableDefinition = {
           column: {
+            hasDefault: false,
             udtName: "UnknownType",
             nullable: false,
           },
@@ -787,7 +841,7 @@ describe("PostgresDatabase", () => {
             td,
             ["CustomType"],
             options,
-          ).column.tsType,
+          ).column.outputTsType,
           "any",
         )
       })

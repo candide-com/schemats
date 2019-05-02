@@ -3,7 +3,9 @@ import Options from "./options"
 export interface ColumnDefinition {
   udtName: string
   nullable: boolean
-  tsType?: string
+  hasDefault: boolean
+  outputTsType?: string
+  inputTsType?: string
 }
 
 export interface TableDefinition {

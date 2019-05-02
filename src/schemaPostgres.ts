@@ -28,7 +28,7 @@ export class PostgresDatabase implements Database {
         case "interval":
         case "numeric":
         case "name":
-          column.tsType = "string"
+          column.outputTsType = "string"
           return column
         case "int2":
         case "int4":
@@ -37,19 +37,20 @@ export class PostgresDatabase implements Database {
         case "float8":
         case "money":
         case "oid":
-          column.tsType = "number"
+          column.outputTsType = "number"
           return column
         case "bool":
-          column.tsType = "boolean"
+          column.outputTsType = "boolean"
           return column
         case "json":
         case "jsonb":
-          column.tsType = "Object"
+          column.outputTsType = "Object"
           return column
         case "date":
         case "timestamp":
         case "timestamptz":
-          column.tsType = "Date"
+          column.outputTsType = "Date"
+          column.inputTsType = "DateInput"
           return column
         case "_int2":
         case "_int4":
@@ -57,10 +58,10 @@ export class PostgresDatabase implements Database {
         case "_float4":
         case "_float8":
         case "_money":
-          column.tsType = "Array<number>"
+          column.outputTsType = "Array<number>"
           return column
         case "_bool":
-          column.tsType = "Array<boolean>"
+          column.outputTsType = "Array<boolean>"
           return column
         case "_varchar":
         case "_text":
@@ -68,18 +69,19 @@ export class PostgresDatabase implements Database {
         case "_uuid":
         case "_numeric":
         case "_bytea":
-          column.tsType = "Array<string>"
+          column.outputTsType = "Array<string>"
           return column
         case "_json":
         case "_jsonb":
-          column.tsType = "Array<Object>"
+          column.outputTsType = "Array<Object>"
           return column
         case "_timestamptz":
-          column.tsType = "Array<Date>"
+          column.outputTsType = "Array<Date>"
+          column.inputTsType = "Array<DateInput>"
           return column
         default:
           if (customTypes.indexOf(column.udtName) !== -1) {
-            column.tsType = options.transformTypeName(column.udtName)
+            column.outputTsType = options.transformTypeName(column.udtName)
             return column
           } else {
             console.log(
@@ -87,7 +89,7 @@ export class PostgresDatabase implements Database {
                 column.udtName
               } has been mapped to [any] because no specific type has been found.`,
             )
-            column.tsType = "any"
+            column.outputTsType = "any"
             return column
           }
       }
@@ -147,6 +149,7 @@ export class PostgresDatabase implements Database {
         tableDefinition[schemaItem.column_name] = {
           udtName: schemaItem.udt_name,
           nullable: schemaItem.is_nullable === "YES",
+          hasDefault: schemaItem.column_default !== null,
         }
       },
     )

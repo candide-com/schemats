@@ -30,7 +30,39 @@ function generateColumnType(
   columnName: string,
   column: ColumnDefinition,
 ): string {
-  return `${columnName}: ${column.tsType}${column.nullable ? "| null" : ""};`
+  return `${columnName}: ${column.outputTsType}${
+    column.nullable ? "| null" : ""
+  };`
+}
+
+export function generateTableInputInterface(
+  tableNameRaw: string,
+  tableDefinition: TableDefinition,
+  options: Options,
+) {
+  const tableName = options.transformTypeName(tableNameRaw)
+  const members = Object.keys(tableDefinition)
+    .map(columnName => {
+      return generateInputColumnType(columnName, tableDefinition[columnName])
+    })
+    .join("\n")
+
+  return `
+        export interface ${makeInterfaceNameFromTableName(tableName)}Input {
+        ${members}
+        }
+    `
+}
+
+function generateInputColumnType(
+  columnName: string,
+  column: ColumnDefinition,
+): string {
+  return `${columnName}${
+    column.hasDefault || column.nullable ? "?" : ""
+  }: ${column.inputTsType || column.outputTsType}${
+    column.nullable ? "| null" : ""
+  };`
 }
 
 export function generateEnumType(enumObject: any, options: Options) {

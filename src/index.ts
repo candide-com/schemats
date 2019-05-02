@@ -3,7 +3,11 @@
  * Created by xiamx on 2016-08-10.
  */
 
-import {generateEnumType, generateTableInterface} from "./typescript"
+import {
+  generateEnumType,
+  generateTableInterface,
+  generateTableInputInterface,
+} from "./typescript"
 import {getDatabase, Database} from "./schema"
 import Options, {OptionValues} from "./options"
 import {processString, Options as ITFOptions} from "typescript-formatter"
@@ -67,8 +71,11 @@ export async function typescriptOfTable(
   let interfaces = ""
   const tableTypes = await db.getTableTypes(table, schema, options)
   interfaces += generateTableInterface(table, tableTypes, options)
+  interfaces += generateTableInputInterface(table, tableTypes, options)
   return interfaces
 }
+
+const fixtures = ["export type DateInput = Date | string", "\n"].join("\n")
 
 export async function typescriptOfSchema(
   db: Database | string,
@@ -105,6 +112,8 @@ export async function typescriptOfSchema(
   if (optionsObject.options.writeHeader) {
     output += buildHeader(db, tables, schema, options)
   }
+
+  output += fixtures
   output += enumTypes
   output += interfaces
 

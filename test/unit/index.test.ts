@@ -23,6 +23,7 @@ describe("index", () => {
   before(() => {
     typedTableSandbox.stub(Typescript, "generateEnumType")
     typedTableSandbox.stub(Typescript, "generateTableInterface")
+    typedTableSandbox.stub(Typescript, "generateTableInputInterface")
   })
   beforeEach(() => {
     typedTableSandbox.reset()
@@ -53,13 +54,19 @@ describe("index", () => {
     it("merges string results", async () => {
       dbReflection.getTableTypes.returns(Promise.resolve("tableTypes"))
       tsReflection.generateTableInterface.returns("generatedTableInterfaces\n")
+      tsReflection.generateTableInputInterface.returns(
+        "generatedTableInputInterfaces\n",
+      )
       const typescriptString = await Index.typescriptOfTable(
         db,
         "tableName",
         "schemaName",
         new Options(options),
       )
-      assert.equal(typescriptString, "generatedTableInterfaces\n")
+      assert.equal(
+        typescriptString,
+        "generatedTableInterfaces\ngeneratedTableInputInterfaces\n",
+      )
     })
   })
   describe("typescriptOfSchema", () => {
