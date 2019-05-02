@@ -1,24 +1,10 @@
-/**
- * Generate typescript interface from table schema
- * Created by xiamx on 2016-08-10.
- */
-
 import * as _ from "lodash"
 
 import {TableDefinition, ColumnDefinition} from "./schemaInterfaces"
 import Options from "./options"
 
-function nameIsReservedKeyword(name: string): boolean {
-  const reservedKeywords = ["string", "number", "package"]
-  return reservedKeywords.indexOf(name) !== -1
-}
-
-function normalizeName(name: string, options: Options): string {
-  if (nameIsReservedKeyword(name)) {
-    return name + "_"
-  } else {
-    return name
-  }
+function makeInterfaceNameFromTableName(name: string): string {
+  return name + "Row"
 }
 
 export function generateTableInterface(
@@ -34,7 +20,7 @@ export function generateTableInterface(
     .join("\n")
 
   return `
-        export interface ${normalizeName(tableName, options)} {
+        export interface ${makeInterfaceNameFromTableName(tableName)} {
         ${members}
         }
     `
@@ -61,27 +47,3 @@ export function generateEnumType(enumObject: any, options: Options) {
   }
   return enumString
 }
-
-// export function generateTableTypes(
-//   tableNameRaw: string,
-//   tableDefinition: TableDefinition,
-//   options: Options,
-// ) {
-//   const tableName = options.transformTypeName(tableNameRaw)
-//   let fields = ""
-//   Object.keys(tableDefinition).forEach(columnNameRaw => {
-//     const type = tableDefinition[columnNameRaw].tsType
-//     const nullable = tableDefinition[columnNameRaw].nullable ? "| null" : ""
-//     const columnName = options.transformColumnName(columnNameRaw)
-//     fields += `export type ${normalizeName(
-//       columnName,
-//       options,
-//     )} = ${type}${nullable};\n`
-//   })
-
-//   return `
-//         export namespace ${tableName}Fields {
-//         ${fields}
-//         }
-//     `
-// }

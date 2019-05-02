@@ -3,7 +3,7 @@
 export type FormatEnum = 'html' | 'markdown' | 'text';
 export type UserStatusEnum = 'active' | 'confirmed' | 'deleted' | 'pending' | 'suspended';
 
-export interface Users {
+export interface UsersRow {
     email: string;
     id: number;
     pass_crypt: string;
@@ -67,6 +67,6 @@ export interface Users {
     timestamptz_array_col: Array<Date> | null;
 }
 
-export interface SecondTable {
+export interface SecondTableRow {
     email: string;
 }
