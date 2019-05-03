@@ -1,6 +1,7 @@
 demo.gif
 demo2.gif
 src
+test
 dist/test
 **/*[^.d$].ts
 coverage/
