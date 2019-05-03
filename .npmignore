@@ -1,5 +1,11 @@
 demo.gif
 demo2.gif
-test/artifacts
+src
+dist/test
 **/*[^.d$].ts
 coverage/
+.vscode/
+.nyc_output
+.editorconfig
+.prettierignore
+.prettierrc
