@@ -6,8 +6,7 @@
 
 import * as yargs from "yargs"
 import * as fs from "fs"
-import {typescriptOfSchema, getDatabase} from "../src/index"
-import Options from "../src/options"
+import {typescriptOfSchema} from "../src/index"
 
 interface SchematsConfig {
   conn: string

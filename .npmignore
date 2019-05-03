@@ -1,9 +1,9 @@
 .DS_Store
 demo.gif
 demo2.gif
-src
-test
-dist/test
+/src/
+/test/
+/dist/test
 **/*[^.d$].ts
 coverage/
 .vscode/
