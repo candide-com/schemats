@@ -1,5 +1,3 @@
-/* tslint:disable */
-
 export type DateInput = Date | string
 
 export type FormatEnum = 'html' | 'markdown' | 'text';

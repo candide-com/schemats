@@ -103,7 +103,7 @@ export async function typescriptOfSchema(
     tsOfTable.join(""),
   )
 
-  let output = "/* tslint:disable */\n\n"
+  let output = ""
   if (optionsObject.options.writeHeader) {
     output += buildHeader(db, tables, schema)
   }
