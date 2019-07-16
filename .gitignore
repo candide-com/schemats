@@ -336,7 +336,7 @@ paket-files/
 .idea/
 *.sln.iml
 
-*.js
+dist
 typings/
 *.d.ts
 test/actual/*
