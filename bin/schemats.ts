@@ -45,7 +45,7 @@ const argv: SchematsConfig = yargs
   .alias("o", "output")
   .describe("o", "output file name")
   .help("h")
-  .alias("h", "help").argv
+  .alias("h", "help").argv as unknown as SchematsConfig
 ;(async () => {
   try {
     if (!Array.isArray(argv.table)) {
