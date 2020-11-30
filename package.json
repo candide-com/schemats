@@ -68,7 +68,7 @@
     "diff": "^3.2.0",
     "lodash": "^4.17.20",
     "mz": "^2.6.0",
-    "pg-promise": "^8.7.5",
+    "pg-promise": "^10.8.0",
     "typescript": "^3.9.7",
     "typescript-formatter": "^7.0.1",
     "yargs": "^8.0.1"
